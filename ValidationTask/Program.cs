@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Validatio_Task
+namespace Validation_Task
 {
     internal class Program
     {
-            static void Main(string[] args)
-            {
-                string firstName, lastName, username, password, emailAddress;
-                int age;
+        static void Main(string[] args)
+        {
+            string firstName = null;
+            string lastName = null;
+            string username = null;
+            string password = null;
+            string emailAddress = null;
+            int age;
 
             // get the user inputs until all are valid.
             // The username should only be output once
@@ -31,20 +35,20 @@ namespace Validatio_Task
             }
             validity = false;
             Console.Write("Enter age: ");
-                age = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Enter Password: ");
-                password = Console.ReadLine();
-                Console.Write("Enter email address: ");
-                emailAddress = Console.ReadLine();
+            age = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter Password: ");
+            password = Console.ReadLine();
+            Console.Write("Enter email address: ");
+            emailAddress = Console.ReadLine();
 
 
-                //username = createUserName(firstName, lastName, age);
-                //Console.WriteLine($"Username is {username}, you have successfully registered please remember your password");
+            username = createUserName(firstName, lastName, age);
+            Console.WriteLine($"Username is {username}, you have successfully registered please remember your password");
 
-                //  Test your program with a range of tests to show all validation works
-                // Show your evidence in the Readme
+            //  Test your program with a range of tests to show all validation works
+            // Show your evidence in the Readme
 
-            }
+        }
         static bool ValidName(string name)
         {
             // name must be at least two characters and contain only letters
@@ -56,29 +60,29 @@ namespace Validatio_Task
                     letters = int.TryParse(name[i].ToString(), out int result);
                     if (letters == true)
                     {
-                        return true;
+                        return false;
                     }
                 }
+            }
+            return true;
+        }
+
+        static bool validAge(int age)
+        {
+            //age must be between 11 and 18 inclusive
+            if (age < 18 && age > 11)
+            {
+                return true;
             }
             return false;
         }
 
-            static bool validAge(int age)
-            {
-                //age must be between 11 and 18 inclusive
-                if (age < 18 && age > 11)
-                {
-                    return true;
-                }
-            return false;
-            }
 
-
-            static bool ValidPassword(string password)
-            {
+        static bool ValidPassword(string password)
+        {
             // Check password is at least 8 characters in length
             int passwordLength = password.Length;
-                if (passwordLength < 8)
+            if (passwordLength < 8)
             {
                 return false;
             }
@@ -93,7 +97,7 @@ namespace Validatio_Task
             bool NonLetter = false;
             int[] ASCIIValues = { };
             Array.Resize(ref ASCIIValues, passwordLength);
-            for (int i = 0; i < passwordLength;i++)
+            for (int i = 0; i < passwordLength; i++)
             {
                 ASCIIValues[i] = Convert.ToInt32(password[i]);
             }
@@ -144,7 +148,7 @@ namespace Validatio_Task
                 // 987poiq! = not valid (987 are consecutive)
                 for (int i = 0; i < passwordLength - 2; i++)
                 {
-                    if (ASCIIValues[i + 1]-1 == ASCIIValues[i] && ASCIIValues[i] == ASCIIValues[i+2]-2)
+                    if (ASCIIValues[i + 1] - 1 == ASCIIValues[i] && ASCIIValues[i] == ASCIIValues[i + 2] - 2)
                     {
                         return false;
                     }
@@ -162,7 +166,7 @@ namespace Validatio_Task
             // contains only one @ and any number of .
             // does not contain any other non letter or number characters
             int indexOfAt = email.IndexOf("@");
-            if (indexOfAt -2 < 0)
+            if (indexOfAt - 2 < 0)
             {
                 return false;
             }
@@ -171,13 +175,13 @@ namespace Validatio_Task
             {
                 return false;
             }
-           if ( email.LastIndexOf('@') == email.IndexOf('@'))
+            if (email.LastIndexOf('@') == email.IndexOf('@'))
             {
                 return false;
             }
             int[] ASCII = { };
             Array.Resize(ref ASCII, email.Length);
-           for (int i = 0; i < email.Length; i++)
+            for (int i = 0; i < email.Length; i++)
             {
                 ASCII[i] = Convert.ToInt32(email[i]);
             }
@@ -189,7 +193,7 @@ namespace Validatio_Task
                     {
                         return true;
                     }
-                    return  false;
+                    return false;
                 }
             }
             return true;
@@ -207,9 +211,7 @@ namespace Validatio_Task
             Username.Concat(lastName.Substring(lastName.Length - 2, 2));
             Username = String.Concat(Username, age);
             return Username;
-
-
         }
 
     }
-    }
+}
